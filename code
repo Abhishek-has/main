@@ -1,0 +1,58 @@
+package main
+
+import (
+	"fmt"
+)
+
+// Product struct definition
+type Product struct {
+	id    int
+	name  string
+	price float64
+}
+
+// acceptProducts accepts product details from the user and returns a slice of Products.
+func acceptProducts() []Product {
+	var numProducts int
+	fmt.Print("Enter the number of products: ")
+	fmt.Scanln(&numProducts)
+
+	products := make([]Product, numProducts)
+	for i := 0; i < numProducts; i++ {
+		fmt.Printf("Enter details for product %d:\n", i+1)
+		fmt.Print("ID: ")
+		fmt.Scanln(&products[i].id)
+		fmt.Print("Name: ")
+		fmt.Scanln(&products[i].name)
+		fmt.Print("Price: ")
+		fmt.Scanln(&products[i].price)
+	}
+	return products
+}
+
+// displayProducts displays the product details.
+func displayProducts(products []Product) {
+	fmt.Println("\nProduct Details:")
+	for _, product := range products {
+		fmt.Printf("ID: %d, Name: %s, Price: %.2f\n", product.id, product.name, product.price)
+	}
+}
+
+// calculateAveragePrice calculates the average price of products.
+func calculateAveragePrice(products []Product) float64 {
+	if len(products) == 0 {
+		return 0.0
+	}
+	totalPrice := 0.0
+	for _, product := range products {
+		totalPrice += product.price
+	}
+	return totalPrice / float64(len(products))
+}
+
+func main() {
+	products := acceptProducts()
+	displayProducts(products)
+	averagePrice := calculateAveragePrice(products)
+	fmt.Printf("Average price: %.2f\n", averagePrice)
+}
